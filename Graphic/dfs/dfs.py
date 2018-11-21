@@ -1,6 +1,6 @@
 import csv
-import numpy as np
 
+stack = []
 num_tmp = []
 num_adj = []
 adj = []
@@ -21,8 +21,6 @@ class Node:  # node定义
             adj[num_pre].append(node)
         else:
             node1 = adj[num_pre][0]
-            # while node1._next != None:
-            #     node1 = node1._next
             node2 = Node(num_next, node1)
             adj[num_pre][0] = node2
 
@@ -31,8 +29,6 @@ class Node:  # node定义
             adj[num_next].append(node)
         else:
             node1 = adj[num_next][0]
-            # while node1._next != None:
-            #     node1 = node1._next
             node2 = Node(num_pre, node1)
             adj[num_next][0] = node2
 
@@ -41,38 +37,32 @@ def marked(x):  # 默认传进值 0
     a_tmp = check_marked()
     if a_tmp == True:
         exit()
-    print(a_tmp)
-    n_tmp = x
+    # print(a_tmp)
     num_adj[x][1] = 1
-    print(num_adj)
+    # print(num_adj)
     node = adj[x][0]
     num = node.data
-    print(num)
+    # print(num)
     if num_adj[num][1] != 1:
         num_adj[num][1] = 1  # 标记节点
+        stack.append(num)
         marked(num)
     else:
         node = node._next
-        print(node.data)
+        # print(node.data)
         num_tmp = node.data
         if num_adj[num_tmp][1] != 1:
             num_adj[num_tmp][1] = 1
+            stack.append(num_tmp)
             marked(num_tmp)
         else:
             num_tmp = node.data
             node = node._next
             if node == None:
-                adj_node = adj[n_tmp][0]
-                adj_tmp = adj_node.data
-                node_tmp = adj_node._next
-                while node_tmp != None:
-                    print("11")
-                    if adj_tmp < node_tmp.data:
-                        adj_tmp = node_tmp.data
-                    node_tmp = node_tmp._next
                 marked(adj_tmp)
             else:
                 num_tmp = node.data
+                stack.append(num_tmp)
                 marked(num_tmp)
 
 
@@ -108,8 +98,3 @@ with open("d://dfs.csv", "r", encoding="utf-8", newline="") as f:
             VD = list(map(int, row))  # 性质转换 VD[0] VD[1]
             Node.NodeAppend(VD[0], VD[1])
     marked(0)
-    print(adj)
-    a = adj[0][0]
-    b = a._next
-    print(a.data)
-    print(num_adj)
