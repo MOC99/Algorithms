@@ -1,7 +1,6 @@
 import csv
 
 stack = []
-num_tmp = []
 num_adj = []
 adj = []
 adj_head = None
@@ -33,7 +32,7 @@ class Node:  # node定义
             adj[num_next][0] = node2
 
 
-def marked(x):  # 默认传进值 0
+def DFS(x):  # 默认传进值 0
     a_tmp = check_marked()
     if a_tmp == True:
         exit()
@@ -46,7 +45,7 @@ def marked(x):  # 默认传进值 0
     if num_adj[num][1] != 1:
         num_adj[num][1] = 1  # 标记节点
         stack.append(num)
-        marked(num)
+        DFS(num)
     else:
         node = node._next
         # print(node.data)
@@ -54,16 +53,17 @@ def marked(x):  # 默认传进值 0
         if num_adj[num_tmp][1] != 1:
             num_adj[num_tmp][1] = 1
             stack.append(num_tmp)
-            marked(num_tmp)
+            DFS(num_tmp)
         else:
             num_tmp = node.data
             node = node._next
             if node == None:
-                marked(adj_tmp)
+                adj_tmp = stack.pop()
+                DFS(adj_tmp)
             else:
                 num_tmp = node.data
                 stack.append(num_tmp)
-                marked(num_tmp)
+                DFS(num_tmp)
 
 
 def check_marked():  # 标记检查
@@ -97,4 +97,4 @@ with open("d://dfs.csv", "r", encoding="utf-8", newline="") as f:
         else:
             VD = list(map(int, row))  # 性质转换 VD[0] VD[1]
             Node.NodeAppend(VD[0], VD[1])
-    marked(0)
+    DFS(0)
