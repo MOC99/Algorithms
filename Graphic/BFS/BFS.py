@@ -43,7 +43,7 @@ def BFS(x):         # 默认传入值 0
             num_adj[data][1] = 1
         node = node._next
         # print(queue)
-        print(edgeto)
+        # print(edgeto)
     if len(queue) == 0:
         # print(num_adj)
         edgeto.sort()
